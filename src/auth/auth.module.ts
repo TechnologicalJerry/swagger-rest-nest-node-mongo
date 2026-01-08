@@ -11,10 +11,6 @@ import { UsersModule } from '../users/users.module';
   imports: [
     PassportModule,
     UsersModule,
-    // JwtModule.register({
-    //   secret: process.env.JWT_SECRET,
-    //   signOptions: { expiresIn: '1d' },
-    // }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -26,4 +22,4 @@ import { UsersModule } from '../users/users.module';
   controllers: [AuthController],
   providers: [AuthService, Jwt],
 })
-export class AuthModule { }
+export class AuthModule {}
