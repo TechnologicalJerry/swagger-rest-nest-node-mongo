@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { SignupAuthDto } from './dto/signup-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
-import { Query } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -25,19 +24,13 @@ export class AuthController {
   }
 
   @Get()
-  findAll(@Query('location') location: string) {
-    return [{ location }];
+  findAll() {
+    return this.authService.findAll();
   }
-
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return { id };
-    // return this.authService.findOne(+id);
+    return this.authService.findOne(+id);
   }
 
   @Delete(':id')
