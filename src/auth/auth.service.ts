@@ -1,20 +1,26 @@
-import { BadRequestException, UnauthorizedException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  UnauthorizedException,
+  Injectable,
+} from '@nestjs/common';
 import { SignupAuthDto } from './dto/signup-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/schemas/user.schema';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signup(signupAuthDto: SignupAuthDto) {
-    const existingUser = await this.usersService.findByIdentifier(signupAuthDto.email || signupAuthDto.userName);
+    const existingUser = await this.usersService.findByIdentifier(
+      signupAuthDto.email || signupAuthDto.userName,
+    );
     if (existingUser) {
       throw new BadRequestException('User already registered');
     }
@@ -35,7 +41,9 @@ export class AuthService {
   }
 
   async login(loginAuthDto: LoginAuthDto) {
-    const user = await this.usersService.findByIdentifier(loginAuthDto.identifier);
+    const user = await this.usersService.findByIdentifier(
+      loginAuthDto.identifier,
+    );
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -62,9 +70,9 @@ export class AuthService {
     return { message: 'Password reset link sent (mock)' };
   }
 
-  private generateToken(user: any) {
+  private generateToken(user: User) {
     const payload = {
-      sub: user._id,
+      sub: user._id.toString(),
       email: user.email,
       role: user.role,
     };
