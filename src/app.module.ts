@@ -12,12 +12,15 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/swagger-rest-nest-node-mongo'),
+    MongooseModule.forRoot(
+      process.env.MONGO_URI ||
+        'mongodb://localhost:27017/swagger-rest-nest-node-mongo',
+    ),
     UsersModule,
     ProductsModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
