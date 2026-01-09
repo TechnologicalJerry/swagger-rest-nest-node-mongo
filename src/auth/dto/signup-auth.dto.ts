@@ -35,9 +35,12 @@ export class SignupAuthDto {
   @ApiProperty({ description: 'The phone number of the user' })
   @IsString()
   @IsNotEmpty()
-  @Matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/, {
-    message: 'Phone number must be a valid phone number format',
-  })
+  @Matches(
+    /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/,
+    {
+      message: 'Phone number must be a valid phone number format',
+    },
+  )
   phoneNumber: string;
 
   @ApiProperty({ description: 'The password of the user' })
